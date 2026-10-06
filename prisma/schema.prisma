@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Link {
+  id             String   @id @default(cuid())
+  code           String   @unique
+  destinationUrl String   @map("destination_url")
+  createdAt      DateTime @default(now()) @map("created_at")
+  expiresAt      DateTime @map("expires_at")
+  scanCount      Int      @default(0) @map("scan_count")
+  revoked        Boolean  @default(false)
+  creatorIp      String?  @map("creator_ip")
+  passwordHash   String?  @map("password_hash")
+
+  @@map("links")
+}
